@@ -10,7 +10,7 @@ const user = require("./user.json")
 */
 router.get('/home', (req,res) => {
   // res.send('This is home router');
-  res.sendFile(__dirname + "./home.html")
+  res.sendFile(__dirname + "/home.html")
 });
 
 /*
@@ -18,7 +18,7 @@ router.get('/home', (req,res) => {
 */
 router.get('/profile', (req,res) => {
   // res.send('This is profile router');
-  res.send({data: [user]})
+  res.send({d: [user]})
 });
 
 /*
