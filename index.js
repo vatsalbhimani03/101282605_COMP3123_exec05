@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
+const user = require("./user.json")
 
 /*
 - Create new html file name home.html 
@@ -8,14 +9,16 @@ const router = express.Router();
 - Return home.html page to client
 */
 router.get('/home', (req,res) => {
-  res.send('This is home router');
+  // res.send('This is home router');
+  res.sendFile(__dirname + "./home.html")
 });
 
 /*
 - Return all details from user.json file to client as JSON format
 */
 router.get('/profile', (req,res) => {
-  res.send('This is profile router');
+  // res.send('This is profile router');
+  res.send({data: [user]})
 });
 
 /*
@@ -38,7 +41,25 @@ router.get('/profile', (req,res) => {
     }
 */
 router.get('/login', (req,res) => {
-  res.send('This is login router');
+  // res.send('This is login router');
+  const { username, password } = req.query
+  console.log(username, password)
+  if (username == user.username) {
+    res.send({
+      status: true,
+      message: "User Is valid"
+    })
+  }else if(username !== user.username){
+    res.send({
+      status: false,
+      message: "User Name is invalid"
+    })
+  } else if (password !== user.password) {
+    res.send({
+      status: false,
+      message: "Password is invalid"
+    })
+  } 
 });
 
 /*
@@ -46,7 +67,9 @@ router.get('/login', (req,res) => {
     in HTML format like <b>${username} successfully logout.<b>
 */
 router.get('/logout', (req,res) => {
-  res.send('This is logout router');
+  // res.send('This is logout router');
+  res.send(`<b>${req.params.username} successfully logout.<b>`)
+  
 });
 
 app.use('/', router);
